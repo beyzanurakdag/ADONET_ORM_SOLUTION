@@ -32,6 +32,42 @@ namespace ADONET_ORM_FORMUI
             TumKitaplariGrideViewModelleGetir();
             TumKitaplariSilComboyaGetir();
             TumKitaplariGuncelleComboyaGetir();
+            //comboBox'ların içine yazı yazılamasın diye comboBox'ların style2'lerini düzenleyeceğiz.
+            //1.yöntem=>
+            comboBoxKitapGuncelle.DropDownStyle = ComboBoxStyle.DropDownList;
+            //2.yöntem=> form kontrolleri taranarak combo bulursa bulduğu nesnenin ilgili property'sini düzenlemektir.
+            //uzun yöntem                       
+            foreach (var item in this.Controls)
+            {
+                if (item is TabControl)
+                {
+                    foreach (var subitem in ((TabControl)item).Controls)
+                    {
+                        if (subitem is TabPage)
+                        {
+                            foreach (var subofsubitem in ((TabPage)subitem).Controls)
+                            {
+                                if (subofsubitem is ComboBox)
+                                {
+                                    ((ComboBox)subofsubitem).DropDownStyle = ComboBoxStyle.DropDownList;
+                                }
+                            }
+                        }
+                    }
+                }            }
+
+            //Yukarıdaki foreach'e göre daha kısa yöntem
+            //TabControl --> TabPage
+            //for (int i = 0; i < this.Controls[0].Controls.Count; i++)
+            //{
+            //    for (int k = 0; k < this.Controls[0].Controls[i].Controls.Count; k++)
+            //    {
+            //        if (this.Controls[0].Controls[i].Controls[k] is ComboBox)
+            //        {
+            //            ((ComboBox)this.Controls[0].Controls[i].Controls[k]).DropDownStyle = ComboBoxStyle.DropDownList;
+            //        }
+            //    }
+            //}
         }
 
         private void TumKitaplariGuncelleComboyaGetir()
